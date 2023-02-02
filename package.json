@@ -13,6 +13,9 @@
     "typescript": "^4.8.4"
   },
   "dependencies": {
+    "@typegoose/typegoose": "^10.1.0",
+    "dotenv": "^16.0.3",
+    "mongoose": "^6.9.0",
     "puppeteer": "^19.0.0",
     "puppeteer-extra": "^3.3.4",
     "puppeteer-extra-plugin-stealth": "^2.11.1"

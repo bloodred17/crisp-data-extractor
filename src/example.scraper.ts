@@ -1,27 +1,28 @@
+import { executablePath } from 'puppeteer';
 import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
-import { delay } from './scraping-util';
 
 puppeteer.use(StealthPlugin());
 
-export const exampleScrape = async () => {
+export const exampleScrape = async (url: string) => {
   const browser = await puppeteer.launch({
     headless: false,
+    executablePath: executablePath(),
   });
 
   const page = await browser.newPage();
 
   try {
-    await page.goto('https://example.com');
-    await delay(5000);
-    const title = await page.evaluate(() => {
-      return document.querySelector('h1')?.innerText;
+    await page.goto(url, { waitUntil: 'domcontentloaded' });
+
+    const content = await page.evaluate(() => {
+      return document.querySelector('article')?.innerHTML;
     });
 
     await page?.close();
     await browser?.close();
 
-    return title;
+    return content;
   } catch (e) {
     try {
       await page?.close();
