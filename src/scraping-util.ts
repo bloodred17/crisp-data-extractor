@@ -1,27 +1,25 @@
-import { HTTPResponse, Page } from "puppeteer";
+import { HTTPResponse, Page } from 'puppeteer';
 
-export const delay =
-  (timeout: number): Promise<void> =>
-    new Promise((resolve) =>
-      setTimeout(() => resolve(), timeout));
-
+export const delay = (timeout: number): Promise<void> =>
+  new Promise((resolve) => setTimeout(() => resolve(), timeout));
 
 export function interceptor<T>(
   page: Page,
   interceptRoute: string,
   responseType: 'text' | 'json' | 'full',
   timeout: number,
-  conditions?: ((response: HTTPResponse) => (boolean | Promise<boolean>))[],
+  conditions?: ((response: HTTPResponse) => boolean | Promise<boolean>)[]
 ): Promise<T> {
-  const defaultCondition: (response: HTTPResponse) => boolean = (response: HTTPResponse) =>
-    response.url().includes(interceptRoute);
+  const defaultCondition: (response: HTTPResponse) => boolean = (
+    response: HTTPResponse
+  ) => response.url().includes(interceptRoute);
   return Promise.race([
     new Promise<any>((resolve) => {
       page.on('response', async (response) => {
         let finalCondition: boolean = defaultCondition(response);
         if (conditions) {
           for (const condition of conditions) {
-            finalCondition = finalCondition && await condition(response);
+            finalCondition = finalCondition && (await condition(response));
           }
         }
         if (finalCondition) {
@@ -47,8 +45,8 @@ export function interceptor<T>(
         }
       });
     }),
-    new Promise<any>(function(resolve) {
-      setTimeout(function() {
+    new Promise<any>(function (resolve) {
+      setTimeout(function () {
         resolve('TIMEOUT');
       }, timeout);
     }),

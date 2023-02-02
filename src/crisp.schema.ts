@@ -1,15 +1,20 @@
-import { getModelForClass, index, modelOptions, prop } from "@typegoose/typegoose";
-import { Category, CrispArticle } from "./crisp.interface";
+import {
+  getModelForClass,
+  index,
+  modelOptions,
+  prop,
+} from '@typegoose/typegoose';
+import { Category, CrispArticle } from './crisp.interface';
 
 export class CategorySchema implements Category {
   @prop()
   category_id?: string;
   @prop()
-  name?:        string;
+  name?: string;
   @prop()
-  color?:       null;
+  color?: null;
   @prop()
-  section?:     null;
+  section?: null;
 }
 
 @modelOptions({
@@ -19,31 +24,31 @@ export class CategorySchema implements Category {
 @index({ created_at: 1 })
 export class CrispSchema implements CrispArticle {
   @prop()
-  article_id?:   string;
+  article_id?: string;
   @prop()
-  title?:        string;
+  title?: string;
   @prop()
-  status?:       string;
+  status?: string;
   @prop()
-  visibility?:   string;
+  visibility?: string;
   @prop()
-  featured?:     boolean;
+  featured?: boolean;
   @prop()
-  visits?:       number;
+  visits?: number;
   @prop()
-  order?:        number;
+  order?: number;
   @prop()
-  url?:          string;
+  url?: string;
   @prop()
-  created_at?:   number;
+  created_at?: number;
   @prop()
-  updated_at?:   number;
+  updated_at?: number;
   @prop()
   published_at?: number;
   @prop()
-  description?:  string;
+  description?: string;
   @prop()
-  content?:      string;
+  content?: string;
   @prop()
   html?: string;
   @prop()

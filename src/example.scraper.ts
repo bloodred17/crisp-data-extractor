@@ -27,9 +27,9 @@ export const exampleScrape = async (url: string) => {
     try {
       await page?.close();
       await browser?.close();
-    } catch(err) {
+    } catch (err) {
       console.log('Failed to close page and browser. Probably closed');
     }
     throw e;
   }
-}
+};
