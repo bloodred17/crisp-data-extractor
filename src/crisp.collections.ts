@@ -1,4 +1,6 @@
-export const crispCollections = [
+import { CrispCategory } from "./crisp.interface";
+
+export const crispCollections: CrispCategory[] = [
   {
     "category_id": "cfd9bf19-8a28-4c0a-bb41-3ef8707c113b",
     "name": "Shipments",

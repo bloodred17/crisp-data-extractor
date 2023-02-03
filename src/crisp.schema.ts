@@ -4,9 +4,9 @@ import {
   modelOptions,
   prop,
 } from '@typegoose/typegoose';
-import { Category, CrispArticle } from './crisp.interface';
+import { CrispCategory, CrispArticle } from './crisp.interface';
 
-export class CategorySchema implements Category {
+export class CategorySchema implements CrispCategory {
   @prop()
   category_id?: string;
   @prop()

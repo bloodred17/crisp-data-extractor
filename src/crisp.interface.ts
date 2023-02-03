@@ -16,9 +16,24 @@ export interface Crisp {
 export interface Category {
   category_id?: string;
   name?: string;
-  color?: null;
-  section?: null;
+  color?: string;
+  section?: string;
 }
+
+export interface CrispCategory extends Category {
+    category_id?: string;
+    name?:        string;
+    description?: string;
+    color?:       string;
+    image?:       string;
+    order?:       number;
+    url?:         string;
+    sections?:    number;
+    articles?:    number;
+    created_at?:  number;
+    updated_at?:  number;
+}
+
 
 export interface CrispResponse {
   error?: boolean;

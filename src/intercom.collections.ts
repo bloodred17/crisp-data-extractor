@@ -1,4 +1,6 @@
-export const intercomCollections = [
+import { IntercomCollection } from "./intercom.interface";
+
+export const intercomCollections: IntercomCollection[] = [
   {
       "id": "3171344",
       "app_id": "e5s92mwy",
