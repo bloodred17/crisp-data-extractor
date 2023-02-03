@@ -9,7 +9,7 @@ const ORG_ID = process.env.ORG_ID;
 
 export const crispHelpdeskExtractor = async (hook?: (article: CrispArticle) => void) => {
   const browser = await puppeteer.launch({
-    headless: false,
+    headless: true,
     executablePath: executablePath(),
   });
 
