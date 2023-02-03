@@ -6,7 +6,7 @@ import { CrispModel, CrispSchema } from './crisp.schema';
 config();
 
 const ORG_ID = process.env.ORG_ID;
-export const crispExtractor = async (options?: {saveToDb?: boolean, hook?: () => void}) => {
+export const crispExtractor = async (options?: {saveToDb?: boolean, hook?: (article: CrispArticle) => void}) => {
   const browser = await puppeteer.launch({
     headless: false,
     executablePath: executablePath(),
@@ -86,7 +86,6 @@ export const crispExtractor = async (options?: {saveToDb?: boolean, hook?: () =>
           );
           data.category = article?.category;
 
-          crispArticles.push(data);
           if (options && options?.saveToDb) {
             const doc = await CrispModel.create(new CrispSchema(data));
             console.log(doc);
@@ -94,7 +93,7 @@ export const crispExtractor = async (options?: {saveToDb?: boolean, hook?: () =>
 
           if (options && options?.hook) {
             try {
-              await options?.hook();
+              await options?.hook(data);
             } catch (e) {
               console.log(e);
             }
