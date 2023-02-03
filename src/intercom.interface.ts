@@ -22,3 +22,13 @@ export interface LocalizedContent {
   name?:        string;
   description?: string;
 }
+export interface IntercomArticle { 
+  title: string,
+  description?: string,
+  body?: string,
+  author_id: string,
+  state?: string,
+  parent_id?: string,
+  parent_type?: string,
+  translated_content?: {}
+}
