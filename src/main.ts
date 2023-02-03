@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import { config } from 'dotenv';
 import { CrispArticle } from './crisp.interface';
 import { CrispModel, CrispSchema } from './crisp.schema';
-import { intercomMigrate } from './intercom.migration';
+
 config();
 
 (async () => {
@@ -20,8 +20,6 @@ config();
       const doc = await CrispModel.create(new CrispSchema(crispArticle));
       console.log(doc);
     }
-
-    await intercomMigrate(crispArticle);
   });
   
   process.exit(0);

@@ -2,6 +2,7 @@ import puppeteer, { executablePath, HandleFor, HTTPResponse } from 'puppeteer';
 import { Crisp, CrispArticle, CrispResponse } from './crisp.interface';
 import { delay, interceptor } from './scraping-util';
 import { config } from 'dotenv';
+
 config();
 
 const ORG_ID = process.env.ORG_ID;
@@ -51,7 +52,6 @@ export const crispHelpdeskExtractor = async (hook?: (article: CrispArticle) => v
     await button.click();
 
     await page.waitForNetworkIdle({ idleTime: 5000 });
-    // console.log(articles);
 
     const crispArticles: CrispArticle[] = [];
     for await (const article of articles) {
@@ -71,6 +71,7 @@ export const crispHelpdeskExtractor = async (hook?: (article: CrispArticle) => v
 
       await page.goto(url + '/en/' + article?.article_id, {
         waitUntil: 'networkidle0',
+        timeout: 35_000,
       });
       const { data } = (await intercepted) as CrispResponse;
 
@@ -79,6 +80,7 @@ export const crispHelpdeskExtractor = async (hook?: (article: CrispArticle) => v
         try {
           await newPage.goto(data?.url as string, {
             waitUntil: 'networkidle0',
+            timeout: 20_000,
           });
 
           data.html = await newPage.evaluate(

@@ -25,32 +25,46 @@ export class CategorySchema implements CrispCategory {
 export class CrispSchema implements CrispArticle {
   @prop()
   article_id?: string;
+  
   @prop()
   title?: string;
+  
   @prop()
   status?: string;
+  
   @prop()
   visibility?: string;
+  
   @prop()
   featured?: boolean;
+  
   @prop()
   visits?: number;
+  
   @prop()
   order?: number;
+  
   @prop()
   url?: string;
+  
   @prop()
   created_at?: number;
+  
   @prop()
   updated_at?: number;
+  
   @prop()
   published_at?: number;
+  
   @prop()
   description?: string;
+  
   @prop()
   content?: string;
+  
   @prop()
   html?: string;
+  
   @prop()
   category?: CategorySchema | null;
 
