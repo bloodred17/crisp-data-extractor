@@ -12,9 +12,9 @@ export class CategorySchema implements CrispCategory {
   @prop()
   name?: string;
   @prop()
-  color?: null;
+  color?: string;
   @prop()
-  section?: null;
+  section?: string;
 }
 
 @modelOptions({
