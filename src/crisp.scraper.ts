@@ -6,7 +6,7 @@ config();
 
 const ORG_ID = process.env.ORG_ID;
 
-export const crispExtractor = async (hook?: (article: CrispArticle) => void) => {
+export const crispHelpdeskExtractor = async (hook?: (article: CrispArticle) => void) => {
   const browser = await puppeteer.launch({
     headless: false,
     executablePath: executablePath(),

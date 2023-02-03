@@ -1,8 +1,9 @@
-import { crispExtractor } from './crisp.scraper';
+import { crispHelpdeskExtractor } from './crisp.scraper';
 import mongoose from 'mongoose';
 import { config } from 'dotenv';
 import { CrispArticle } from './crisp.interface';
 import { CrispModel, CrispSchema } from './crisp.schema';
+import { intercomMigrate } from './intercom.migration';
 config();
 
 (async () => {
@@ -13,12 +14,16 @@ config();
     );
     dbConnected = true;
   }
-  await crispExtractor(async (crispArticle: CrispArticle) => {
+
+  await crispHelpdeskExtractor(async (crispArticle: CrispArticle) => {
     if (dbConnected) {
       const doc = await CrispModel.create(new CrispSchema(crispArticle));
       console.log(doc);
     }
+
+    await intercomMigrate(crispArticle);
   });
+  
   process.exit(0);
 })();
 
