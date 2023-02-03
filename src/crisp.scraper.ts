@@ -2,11 +2,11 @@ import puppeteer, { executablePath, HandleFor, HTTPResponse } from 'puppeteer';
 import { Crisp, CrispArticle, CrispResponse } from './crisp.interface';
 import { delay, interceptor } from './scraping-util';
 import { config } from 'dotenv';
-import { CrispModel, CrispSchema } from './crisp.schema';
 config();
 
 const ORG_ID = process.env.ORG_ID;
-export const crispExtractor = async (options?: {saveToDb?: boolean, hook?: (article: CrispArticle) => void}) => {
+
+export const crispExtractor = async (hook?: (article: CrispArticle) => void) => {
   const browser = await puppeteer.launch({
     headless: false,
     executablePath: executablePath(),
@@ -86,14 +86,9 @@ export const crispExtractor = async (options?: {saveToDb?: boolean, hook?: (arti
           );
           data.category = article?.category;
 
-          if (options && options?.saveToDb) {
-            const doc = await CrispModel.create(new CrispSchema(data));
-            console.log(doc);
-          }
-
-          if (options && options?.hook) {
+          if (hook) {
             try {
-              await options?.hook(data);
+              await hook(data);
             } catch (e) {
               console.log(e);
             }

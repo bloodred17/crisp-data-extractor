@@ -1,15 +1,24 @@
 import { crispExtractor } from './crisp.scraper';
 import mongoose from 'mongoose';
 import { config } from 'dotenv';
-import { intercomMigrate } from './intercom.migration';
 import { CrispArticle } from './crisp.interface';
+import { CrispModel, CrispSchema } from './crisp.schema';
 config();
 
 (async () => {
-  await mongoose.connect(
-    process.env.MONGODB_ENDPOINT || 'mongodb://localhost:27017/crisp'
-  );
-  await crispExtractor({ hook: (crispArticle: CrispArticle) => intercomMigrate(crispArticle)});
+  let dbConnected = false;
+  if (process.env.MONGODB_ENDPOINT) {
+    await mongoose.connect(
+      process.env.MONGODB_ENDPOINT
+    );
+    dbConnected = true;
+  }
+  await crispExtractor(async (crispArticle: CrispArticle) => {
+    if (dbConnected) {
+      const doc = await CrispModel.create(new CrispSchema(crispArticle));
+      console.log(doc);
+    }
+  });
   process.exit(0);
 })();
 
